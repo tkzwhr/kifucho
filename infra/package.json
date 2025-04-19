@@ -1,0 +1,15 @@
+{
+  "name": "kifucho-infra",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "./setup.sh",
+    "on": "docker compose up -d",
+    "off": "docker compose down",
+    "gen:seeds": "node ./gen_seeds.mjs",
+    "gen:metadata": "cd gql-server && rm -rf metadata && hasura --skip-update-check metadata export --admin-secret hasura"
+  },
+  "devDependencies": {
+    "pg": "^8.15.6"
+  }
+}

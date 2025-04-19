@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "check:fix": "biome check --fix"
+    "check:fix": "biome check --fix",
+    "infra": "pnpm -F \"kifucho-infra\""
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
