@@ -7,7 +7,7 @@
   },
   "files": {
     "include": [],
-    "ignore": []
+    "ignore": ["infra/**/*"]
   },
   "formatter": {
     "indentStyle": "space",

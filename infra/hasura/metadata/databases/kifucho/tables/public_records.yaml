@@ -1,0 +1,47 @@
+table:
+  name: records
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: owned_by
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        owned_by: x-hasura-User-Id
+      columns:
+        - played_at
+        - sgf_text
+    comment: ""
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - owned_by
+        - played_at
+        - sgf_text
+      filter:
+        owned_by:
+          _eq: X-Hasura-User-Id
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - played_at
+        - sgf_text
+      filter:
+        owned_by:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        owned_by:
+          _eq: X-Hasura-User-Id
+    comment: ""

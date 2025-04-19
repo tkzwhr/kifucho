@@ -1,0 +1,29 @@
+services:
+  database:
+    container_name: kifucho-postgres
+    image: postgres:17.5-alpine3.21
+    ports:
+      - "20001:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_DB: kifucho
+      POSTGRES_HOST_AUTH_METHOD: trust
+      TZ: "Asia/Tokyo"
+  graphql-engine:
+    container_name: kifucho-hasura
+    image: hasura/graphql-engine:v2.45.3.ubuntu
+    ports:
+      - "20002:8080"
+    restart: always
+    depends_on:
+      - database
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@kifucho-postgres:5432/kifucho
+      HASURA_GRAPHQL_ENABLE_CONSOLE: false
+      HASURA_GRAPHQL_DEV_MODE: true
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: hasura
+volumes:
+  db:

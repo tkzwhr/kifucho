@@ -1,0 +1,12 @@
+{
+  "name": "kifucho-infra",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "on": "docker compose up -d",
+    "off": "docker compose down",
+    "hsr": "cd hasura && hasura",
+    "hsr:setup": "pnpm run hsr deploy --with-seeds",
+    "hsr:dev": "pnpm run hsr console"
+  }
+}
