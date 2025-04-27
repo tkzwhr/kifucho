@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "check:fix": "biome check --fix",
-    "infra": "pnpm -F \"kifucho-infra\""
+    "infra": "pnpm -F \"kifucho-infra\"",
+    "web": "pnpm -F \"kifucho-web\""
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
