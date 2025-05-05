@@ -7,14 +7,20 @@
     "prepare": "panda codegen",
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@afroze9/solid-auth0": "^0.2.0",
     "@ark-ui/solid": "^5.9.1",
+    "@solid-primitives/graphql": "^2.2.1",
     "solid-js": "^1.9.7",
     "lucide-solid": "^0.511.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
     "@pandacss/dev": "^0.53.6",
     "@park-ui/panda-preset": "^0.43.1",
     "typescript": "^5.8.3",

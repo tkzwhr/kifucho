@@ -145,3 +145,6 @@ dist
 
 ## Panda
 web/styled-system
+
+## GraphQL
+web/src/generated
