@@ -17,6 +17,7 @@
     "@ark-ui/solid": "^5.9.1",
     "@sabaki/sgf": "^3.4.7",
     "@solid-primitives/graphql": "^2.2.1",
+    "date-fns": "^4.1.0",
     "lucide-solid": "^0.511.0",
     "solid-js": "^1.9.7"
   },

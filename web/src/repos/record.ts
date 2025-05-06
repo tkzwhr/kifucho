@@ -72,7 +72,7 @@ function createRecordRepo(): {
   const [userId, setUserId] = createSignal<string | undefined>();
 
   // Select
-  const NUMBER_OF_PAGES = 1;
+  const NUMBER_OF_PAGES = 10;
   const [selectedPage, setSelectedPage] = createSignal(0);
   const [records, setRecords] = createSignal<Records>([]);
   const [last, setLast] = createSignal(false);
