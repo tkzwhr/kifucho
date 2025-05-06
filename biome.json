@@ -7,7 +7,12 @@
   },
   "files": {
     "include": [],
-    "ignore": ["infra/gql-server/**/*"]
+    "ignore": [
+      "infra/gql-server/**/*",
+      "web/dist/**/*",
+      "web/styled-system/**/*",
+      "web/src/components/ui/**/*"
+    ]
   },
   "formatter": {
     "indentStyle": "space",
