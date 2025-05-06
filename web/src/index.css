@@ -1,1 +1,13 @@
 @layer reset, base, tokens, recipes, utilities;
+
+body {
+  background-color: var(--colors-gray-2);
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+  min-height: 100vh;
+}
