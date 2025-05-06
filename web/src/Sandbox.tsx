@@ -6,6 +6,7 @@ import { useRecordRepo } from "@/repos/record";
 import { useUserRepo } from "@/repos/user";
 import { isLocal } from "@/utils/env";
 import { useAuth0 } from "@afroze9/solid-auth0";
+import { parse } from "@sabaki/sgf";
 import {
   For,
   Match,
@@ -91,7 +92,7 @@ export default function Sandbox() {
                   whiteSpace="nowrap"
                   textOverflow="ellipsis"
                 >
-                  {item.id}: {item.sgf_text}
+                  {item.id}: {JSON.stringify(parse(item.sgf_text ?? ""))}
                 </Box>
                 <Button
                   onclick={() => setRecordId(item.id)}
