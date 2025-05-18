@@ -556,7 +556,33 @@ export type Users_Updates = {
   where: Users_Bool_Exp;
 };
 
-export type GetRecordsQueryVariables = Exact<{ [key: string]: never; }>;
+export type SelectRecordsQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+  offset: Scalars['Int']['input'];
+}>;
 
 
-export type GetRecordsQuery = { __typename?: 'query_root', records: Array<{ __typename?: 'records', id: number, played_at: any, sgf_text: string }> };
+export type SelectRecordsQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', records: Array<{ __typename?: 'records', id: number, played_at: any, sgf_text: string }> } | null };
+
+export type InsertRecordMutationVariables = Exact<{
+  playedAt: Scalars['date']['input'];
+  sgfText: Scalars['String']['input'];
+}>;
+
+
+export type InsertRecordMutation = { __typename?: 'mutation_root', insert_records_one?: { __typename?: 'records', id: number } | null };
+
+export type DeleteRecordMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteRecordMutation = { __typename?: 'mutation_root', delete_records_by_pk?: { __typename?: 'records', id: number } | null };
+
+export type SelectUserQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+
+export type SelectUserQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: string, name: string } | null };
