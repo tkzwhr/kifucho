@@ -1,3 +1,4 @@
+import Board from "@/components/Board.tsx";
 import DatePick from "@/components/confirm-import/DatePick";
 import GameResult from "@/components/confirm-import/GameResult";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,11 @@ function GameForm({
   game,
   setGame,
   playerId,
-}: { game: Game; setGame: (sgf: Game) => void; playerId: string }) {
+}: {
+  game: Game;
+  setGame: (sgf: Game) => void;
+  playerId: string;
+}) {
   const [gameState, setGameState] = createStore({
     name: game.metadata.name ?? "無題",
     date: game.metadata.date ?? format(new Date(), "yyyy-MM-dd"),
@@ -112,7 +117,7 @@ function GameForm({
   return (
     <HStack>
       <Box>
-        <img src="/board.png" alt="logo" />
+        <Board sgfText={game.rawData} size="300px" static />
       </Box>
       <Grid
         gap={4}

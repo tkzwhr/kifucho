@@ -11,7 +11,8 @@
       "infra/**/*",
       "web/dist/**/*",
       "web/styled-system/**/*",
-      "web/src/components/ui/**/*"
+      "web/src/components/ui/**/*",
+      "lib/**/*"
     ]
   },
   "formatter": {

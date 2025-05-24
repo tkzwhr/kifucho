@@ -1,3 +1,4 @@
+import Board from "@/components/Board.tsx";
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
 import { Popover } from "@/components/ui/popover";
@@ -10,6 +11,7 @@ import {
   TrashIcon,
   XIcon,
 } from "lucide-solid";
+import { createSignal } from "solid-js";
 import { Box, HStack, VStack } from "../../styled-system/jsx";
 
 type Props = {
@@ -18,7 +20,8 @@ type Props = {
 };
 
 export default function RecordDetail(props: Props) {
-  props;
+  const [move, setMove] = createSignal<number | undefined>();
+
   return (
     <VStack gap={4} position="relative">
       <Popover.Root lazyMount={true}>
@@ -81,19 +84,45 @@ export default function RecordDetail(props: Props) {
         </Popover.Positioner>
       </Popover.Root>
       <Box width="50%">
-        <img src="/board.png" alt="go" />
+        <Board
+          sgfText={props.sgfText}
+          size="100%"
+          static={false}
+          move={move}
+          setMove={setMove}
+        />
       </Box>
       <HStack>
-        <IconButton size="xs" variant="outline" aria-label="最初へ">
+        <IconButton
+          size="xs"
+          variant="outline"
+          aria-label="最初へ"
+          onclick={() => setMove(-9999)}
+        >
           <RewindIcon />
         </IconButton>
-        <IconButton size="xs" variant="outline" aria-label="1手前へ">
+        <IconButton
+          size="xs"
+          variant="outline"
+          aria-label="1手前へ"
+          onclick={() => setMove(-1)}
+        >
           <StepBackIcon />
         </IconButton>
-        <IconButton size="xs" variant="outline" aria-label="1手次へ">
+        <IconButton
+          size="xs"
+          variant="outline"
+          aria-label="1手次へ"
+          onclick={() => setMove(1)}
+        >
           <StepForwardIcon />
         </IconButton>
-        <IconButton size="xs" variant="outline" aria-label="最後へ">
+        <IconButton
+          size="xs"
+          variant="outline"
+          aria-label="最後へ"
+          onclick={() => setMove(9999)}
+        >
           <FastForwardIcon />
         </IconButton>
       </HStack>
