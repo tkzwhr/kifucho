@@ -1,3 +1,4 @@
+import Board from "@/components/Board";
 import RecordDetail from "@/components/RecordDetail";
 import { Accordion } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
@@ -23,8 +24,8 @@ export default function RecordSummary(props: Props) {
           <Accordion.Item value={props.game.id.toString()}>
             <Accordion.ItemTrigger>
               <HStack gap={10}>
-                <Box width="100px" position="relative">
-                  <img src="/board.png" alt="board" />
+                <Box position="relative">
+                  <Board sgfText={props.game.rawData} size="150px" static />
                   <Show when={wins}>
                     <Box
                       color="goldenrod"

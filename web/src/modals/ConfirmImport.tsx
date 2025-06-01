@@ -1,3 +1,4 @@
+import Board from "@/components/Board";
 import DatePick from "@/components/confirm-import/DatePick";
 import GameResult from "@/components/confirm-import/GameResult";
 import { Button } from "@/components/ui/button";
@@ -112,7 +113,7 @@ function GameForm({
   return (
     <HStack>
       <Box>
-        <img src="/board.png" alt="logo" />
+        <Board sgfText={game.rawData} size="300px" static />
       </Box>
       <Grid
         gap={4}

@@ -11,6 +11,7 @@
       "infra/**/*",
       "web/dist/**/*",
       "web/styled-system/**/*",
+      "web/src/generated/*",
       "web/src/components/ui/**/*"
     ]
   },
