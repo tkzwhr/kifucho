@@ -1,4 +1,4 @@
-import Kaya from "kaya";
+import Kaya from "@tkzwhr/kaya";
 import { type Accessor, type Setter, createEffect } from "solid-js";
 import { Box } from "../../styled-system/jsx";
 
