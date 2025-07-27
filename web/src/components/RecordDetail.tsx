@@ -1,4 +1,4 @@
-import Board from "@/components/Board.tsx";
+import Board from "@/components/Board";
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
 import { Popover } from "@/components/ui/popover";

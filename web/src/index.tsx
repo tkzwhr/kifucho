@@ -1,9 +1,13 @@
-/* @refresh reload */
 import { render } from "solid-js/web";
 import "@/index.css";
-import App from "@/App";
-import { isLocal } from "@/utils/env";
+import { SessionProvider } from "@/contexts/session";
+import SignInPage from "@/pages/SignIn";
+import TopPage from "@/pages/Top2";
+import ImportFilePage from "@/pages/import/File";
+import ImportTextPage from "@/pages/import/Text";
+import { isLocal } from "@/utils/env.ts";
 import { Auth0 } from "@afroze9/solid-auth0";
+import { Route, Router } from "@solidjs/router";
 
 const root = document.getElementById("root");
 
@@ -27,4 +31,17 @@ if (root) {
       root,
     );
   }
+}
+
+function App() {
+  return (
+    <SessionProvider>
+      <Router>
+        <Route path="/" component={TopPage} />
+        <Route path="/sign-in" component={SignInPage} />
+        <Route path="/import/file" component={ImportFilePage} />
+        <Route path="/import/text" component={ImportTextPage} />
+      </Router>
+    </SessionProvider>
+  );
 }

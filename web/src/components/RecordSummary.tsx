@@ -4,7 +4,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
 import type { GameWithId } from "@/pages/Top";
-import { result } from "@/utils/text.ts";
+import { result } from "@/utils/text";
 import { ChevronDownIcon, TrophyIcon } from "lucide-solid";
 import { Show } from "solid-js";
 import { Box, HStack, VStack } from "../../styled-system/jsx";
@@ -18,7 +18,7 @@ export default function RecordSummary(props: Props) {
   const wins = props.game.metadata.result?.wins === props.game.player.color;
 
   return (
-    <Card.Root marginBottom={4}>
+    <Card.Root marginBottom={4} width="full">
       <Card.Header>
         <Accordion.Root collapsible={true} borderWidth={0}>
           <Accordion.Item value={props.game.id.toString()}>
