@@ -2,10 +2,10 @@ import { render } from "solid-js/web";
 import "@/index.css";
 import { SessionProvider } from "@/contexts/session";
 import SignInPage from "@/pages/SignIn";
-import TopPage from "@/pages/Top2";
+import TopPage from "@/pages/Top";
 import ImportFilePage from "@/pages/import/File";
 import ImportTextPage from "@/pages/import/Text";
-import { isLocal } from "@/utils/env.ts";
+import { isLocal } from "@/utils/env";
 import { Auth0 } from "@afroze9/solid-auth0";
 import { Route, Router } from "@solidjs/router";
 

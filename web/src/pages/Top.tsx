@@ -3,14 +3,15 @@ import RecordNotFound from "@/components/RecordNotFound";
 import RecordSummary from "@/components/RecordSummary";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useSession } from "@/contexts/session";
 import { type Game, parse as parseSgf } from "@/dto/sgf";
-import ConfirmImportModal from "@/modals/ConfirmImport";
-import SelectSourceModal from "@/modals/SelectSource";
-import { useRecordRepo } from "@/repos/record";
-import { useUserRepo } from "@/repos/user";
+import useDeleteRecord from "@/hooks/deleteRecord";
+import useFetchRecords from "@/hooks/fetchRecords";
+import useFetchUser from "@/hooks/fetchUser";
+import Base from "@/pages/Base";
 import { playerName } from "@/utils/text";
 import { For, Show, Suspense, createEffect, createMemo } from "solid-js";
-import { Box, Flex } from "../../styled-system/jsx";
+import { Box, HStack, VStack } from "../../styled-system/jsx";
 
 export type GameWithId = Game & {
   id: number;
@@ -18,17 +19,29 @@ export type GameWithId = Game & {
 };
 
 export default function TopPage() {
-  const [user] = useUserRepo().select;
-  const [, records, last, setSelectedPage] = useRecordRepo().select;
-  const [deleteResult, setDeleteRecordId] = useRecordRepo().delete;
+  const { gqlClient, userId } = useSession();
+  const [userRes, userFn] = useFetchUser(gqlClient);
+  const [, data, recordsFn] = useFetchRecords(gqlClient);
+  const [deleteRes, deleteFn] = useDeleteRecord(gqlClient);
+
+  createEffect(() => {
+    userFn.setUserId(userId() ?? "");
+    recordsFn.setUserId(userId() ?? "");
+  });
+
+  createEffect(() => {
+    if (deleteRes?.[0].latest !== undefined) {
+      recordsFn.reset();
+    }
+  });
 
   const stackedGames = createMemo(() => {
-    const playerNameString = user?.()?.[0]?.()?.users_by_pk?.name ?? "";
+    const playerNameString = userRes?.[0]?.()?.users_by_pk?.name ?? "";
     const playerColorFn = (blackName: string) =>
-      blackName === playerName(user?.()?.[0]?.()?.users_by_pk?.id)
+      blackName === playerName(userRes?.[0]?.()?.users_by_pk?.id)
         ? "Black"
         : "White";
-    return records?.()?.map((item): GameWithId => {
+    return data.records().map((item): GameWithId => {
       const game = parseSgf(item.sgf_text)[0];
       const playerColor = playerColorFn(game.black.name ?? "");
 
@@ -43,16 +56,10 @@ export default function TopPage() {
     });
   });
 
-  createEffect(() => {
-    if (!deleteResult?.()?.[0]?.loading) {
-      setDeleteRecordId();
-    }
-  });
-
   return (
-    <>
-      <Flex gap="20px" alignItems="start">
-        <Flex direction="column" gap="10px" grow="1">
+    <Base>
+      <HStack gap="20px" alignItems="start">
+        <VStack gap="10px" flexGrow="1">
           <Suspense
             fallback={
               <Box width="full">
@@ -68,22 +75,19 @@ export default function TopPage() {
                 {(g) => (
                   <RecordSummary
                     game={g}
-                    onDelete={() => setDeleteRecordId(g.id)}
+                    onDelete={() => deleteFn.setData(g.id)}
                   />
                 )}
               </For>
-              <Show when={!last()}>
-                <Button
-                  variant="outline"
-                  onclick={() => setSelectedPage((v) => v + 1)}
-                >
+              <Show when={!data.last()}>
+                <Button variant="outline" onclick={recordsFn.next}>
                   続きを読み込む
                 </Button>
               </Show>
             </Show>
           </Suspense>
-        </Flex>
-        <Flex minWidth="360px">
+        </VStack>
+        <Box minWidth="360px">
           <Suspense
             fallback={
               <Box width="full">
@@ -91,12 +95,10 @@ export default function TopPage() {
               </Box>
             }
           >
-            <ProfileCard name={user?.()?.[0]?.()?.users_by_pk?.name ?? ""} />
+            <ProfileCard name={userRes?.[0]?.()?.users_by_pk?.name ?? ""} />
           </Suspense>
-        </Flex>
-      </Flex>
-      <SelectSourceModal />
-      <ConfirmImportModal />
-    </>
+        </Box>
+      </HStack>
+    </Base>
   );
 }

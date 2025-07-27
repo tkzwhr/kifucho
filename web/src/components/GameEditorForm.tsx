@@ -1,5 +1,5 @@
-import DatePick from "@/components/confirm-import/DatePick";
-import GameResult from "@/components/confirm-import/GameResult";
+import DatePick from "@/components/import/DatePick";
+import GameResult from "@/components/import/GameResult";
 import { Input } from "@/components/ui/input";
 import { NumberInput } from "@/components/ui/number-input";
 import { Slider } from "@/components/ui/slider";

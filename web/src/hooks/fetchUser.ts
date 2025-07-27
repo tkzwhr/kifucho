@@ -1,12 +1,12 @@
 import type {
-  SelectUserQuery,
-  SelectUserQueryVariables,
+  FetchUserQuery,
+  FetchUserQueryVariables,
 } from "@/generated/graphql";
 import { type GraphQLClientQuery, gql } from "@solid-primitives/graphql";
 import { type Accessor, type ResourceReturn, createSignal } from "solid-js";
 
 const fetchUserQuery = gql`
-query SelectUser($userId: String!) {
+query FetchUser($userId: String!) {
   users_by_pk(id: $userId) {
     id
     name
@@ -17,18 +17,18 @@ query SelectUser($userId: String!) {
 export default function useFetchUser(
   gqlClient: Accessor<GraphQLClientQuery | undefined>,
 ): [
-  ResourceReturn<SelectUserQuery | undefined> | undefined,
+  ResourceReturn<FetchUserQuery | undefined> | undefined,
   {
     setUserId: (userId: string) => void;
   },
 ] {
   const [queryVars, setQueryVars] = createSignal<
-    SelectUserQueryVariables | undefined
+    FetchUserQueryVariables | undefined
   >();
 
   const queryResource = gqlClient?.()?.<
-    SelectUserQuery,
-    SelectUserQueryVariables
+    FetchUserQuery,
+    FetchUserQueryVariables
   >(fetchUserQuery, queryVars);
 
   return [

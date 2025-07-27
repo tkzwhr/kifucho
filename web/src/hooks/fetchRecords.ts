@@ -1,6 +1,6 @@
 import type {
-  SelectRecordsQuery,
-  SelectRecordsQueryVariables,
+  FetchRecordsQuery,
+  FetchRecordsQueryVariables,
 } from "@/generated/graphql";
 import { type GraphQLClientQuery, gql } from "@solid-primitives/graphql";
 import {
@@ -11,12 +11,12 @@ import {
 } from "solid-js";
 
 type Records = Exclude<
-  SelectRecordsQuery["users_by_pk"],
+  FetchRecordsQuery["users_by_pk"],
   undefined | null
 >["records"];
 
 const fetchRecordsQuery = gql`
-query SelectRecords($userId: String!, $limit: Int!, $offset: Int!) {
+query FetchRecords($userId: String!, $limit: Int!, $offset: Int!) {
   users_by_pk(id: $userId) {
     records(order_by: {played_at: desc}, limit: $limit, offset: $offset) {
       id
@@ -30,7 +30,7 @@ query SelectRecords($userId: String!, $limit: Int!, $offset: Int!) {
 export default function useFetchRecords(
   gqlClient: Accessor<GraphQLClientQuery | undefined>,
 ): [
-  ResourceReturn<SelectRecordsQuery | undefined> | undefined,
+  ResourceReturn<FetchRecordsQuery | undefined> | undefined,
   {
     records: Accessor<Records>;
     last: Accessor<boolean>;
@@ -43,14 +43,14 @@ export default function useFetchRecords(
 ] {
   const NUMBER_OF_PAGES = 10;
   const [queryVars, setQueryVars] = createSignal<
-    SelectRecordsQueryVariables | undefined
+    FetchRecordsQueryVariables | undefined
   >();
   const [records, setRecords] = createSignal<Records>([]);
   const [last, setLast] = createSignal(false);
 
   const queryResource = gqlClient?.()?.<
-    SelectRecordsQuery,
-    SelectRecordsQueryVariables
+    FetchRecordsQuery,
+    FetchRecordsQueryVariables
   >(fetchRecordsQuery, queryVars);
 
   createEffect(() => {

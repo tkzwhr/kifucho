@@ -1,7 +1,7 @@
-import Header from "@/components/Header2";
+import Header from "@/components/Header";
 import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/contexts/session";
-import { isLocal } from "@/utils/env.ts";
+import { isLocal } from "@/utils/env";
 import { useAuth0 } from "@afroze9/solid-auth0";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { type JSX, Show, createEffect, createMemo } from "solid-js";
