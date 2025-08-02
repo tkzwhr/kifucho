@@ -25,8 +25,8 @@ export default function GameEditorForm(props: Props) {
     date: props.game.metadata.date ?? format(new Date(), "yyyy-MM-dd"),
     playerColor: "B",
     opponent: {
-      name: props.game.white.name ?? "",
-      rank: props.game.white.rank ?? "",
+      name: props.game.white.name ?? "NoName",
+      rank: props.game.white.rank,
     },
     komi: props.game.metadata.komi ?? 6.5,
     handicap: props.game.metadata.handicap ?? 0,

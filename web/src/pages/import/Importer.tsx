@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useSession } from "@/contexts/session";
 import type { Game } from "@/dto/sgf";
+import { stringify } from "@/dto/sgf";
 import useInsertRecord from "@/hooks/insertRecord";
 import Base from "@/pages/Base";
 import { useNavigate } from "@solidjs/router";
@@ -18,15 +19,19 @@ type Props = {
 
 export default function ImporterPage(props: Props) {
   const navigate = useNavigate();
-  const { gqlClient } = useSession();
+  const { userId, gqlClient } = useSession();
   const [modifiedGame, setModifiedGame] = createSignal<Game | undefined>();
   const [queryResult, insertRecordFn] = useInsertRecord(gqlClient);
 
   const register = () => {
-    insertRecordFn.setData(
-      modifiedGame()?.metadata.date ?? format(new Date(), "yyyy-MM-dd"),
-      modifiedGame()?.rawData ?? "",
-    );
+    const game = modifiedGame();
+    if (game) {
+      const sgf = stringify(game);
+      insertRecordFn.setData(
+        game.metadata.date ?? format(new Date(), "yyyy-MM-dd"),
+        sgf,
+      );
+    }
   };
 
   createEffect(() => {
@@ -54,7 +59,8 @@ export default function ImporterPage(props: Props) {
                 <GameEditorForm
                   // biome-ignore lint/style/noNonNullAssertion: prechecked
                   game={props.game!}
-                  playerId={""}
+                  // biome-ignore lint/style/noNonNullAssertion: prechecked
+                  playerId={userId()!}
                   setGame={setModifiedGame}
                 />
               </Card.Body>

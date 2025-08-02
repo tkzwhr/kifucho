@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/date-picker";
 import { IconButton } from "@/components/ui/icon-button";
 import { type DateValue, parseDate } from "@ark-ui/solid";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-solid";
 import { For, createEffect, createSignal } from "solid-js";
 
@@ -15,7 +15,8 @@ export default function DatePick(props: Props) {
   const [value, setValue] = createSignal<DateValue[]>();
 
   if (props.date) {
-    setValue([parseDate(props.date)]);
+    const validDate = parse(props.date, "yyyy-M-d", new Date());
+    setValue([parseDate(validDate)]);
   }
 
   createEffect(() => {
